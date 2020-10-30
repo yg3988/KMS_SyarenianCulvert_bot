@@ -6,7 +6,7 @@ Discord Bot for KMS Guild Contents-SyarenianCulvert
 
 ### 샤레니안 참가 커맨드
 
-; [닉네임]
+;p [닉네임]
 
 ;참가 [닉네임]
 
