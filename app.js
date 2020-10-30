@@ -17,8 +17,6 @@ const Member = require('./model/member-model');
 const AssignParty = require('./assign-party');
 const Client = new Discord.Client();
 
-let GuildID;
-
 let maskMembers = new Object();
 
 Client.on('ready', () => {
@@ -34,6 +32,7 @@ Client.on('guildCreate', (guild) => {
 });
 
 Client.on('message', (msg) => {
+	const GuildID = Client.guilds.resolveID(msg.guild.id);
 	const contents = msg.content.split(' ');
 	const command = contents[0];
 
@@ -41,6 +40,8 @@ Client.on('message', (msg) => {
 	//0 test mode
 	//1 participate
 	//2 exit
+	//3 start or assign
+	//4 clear
 	const cond =
 		command === ';p' || command === ';참가'
 			? 1
@@ -117,8 +118,6 @@ Client.on('message', (msg) => {
 			};
 
 			getUserInfo(URL).then(async (res, rej) => {
-				const GuildID = Client.guilds.resolveID(msg.guild.id);
-
 				const member = new Member(res);
 				member.save();
 
@@ -132,7 +131,6 @@ Client.on('message', (msg) => {
 		} else if (cond === 2) {
 			//샤레니안 참가 취소
 			//취소 커맨드 ;e ;철회
-			const GuildID = Client.guilds.resolveID(msg.guild.id);
 			delete maskMembers[nickname];
 
 			Member.findOneAndDelete({ nickname: nickname }, async (err, res) => {
@@ -145,8 +143,6 @@ Client.on('message', (msg) => {
 		} else if (cond === 3) {
 			//샤레니안 파티 배정
 			//배정 커맨드 ;s, ;a ;파티배정
-			const GuildID = Client.guilds.resolveID(msg.guild.id);
-
 			Guild.findOne({ gid: GuildID })
 				.populate({ path: 'members', options: { sort: 'stage' } })
 				.exec((err, res) => {
@@ -189,7 +185,6 @@ Client.on('message', (msg) => {
 		} else if (cond === 4) {
 			//샤레니안 멤버초기화
 			//배정 커맨드 ;c ;초기화
-			const GuildID = Client.guilds.resolveID(msg.guild.id);
 			Object.assign(maskMembers, { [GuildID]: new Object() });
 			Guild.findOne({ gid: GuildID })
 				.populate('members')
@@ -203,21 +198,8 @@ Client.on('message', (msg) => {
 						await Member.findByIdAndDelete(res.members[i]._id);
 					}
 				});
-
-			// new Guild({ gid: GuildID })
-			// 	.save()
-			// 	.then(Object.assign(maskMembers, { [GuildID]: new Object() }));
 		}
 	}
 });
 
 Client.login(__token);
-// console.log(res);
-// 					const members = res.toJSON().members;
-// 					const length = members.length;
-// 					for (let i = 0; i < length; i++) {
-// 						Guild.findOneAndUpdate(
-// 							{ gid: GuildID },
-// 							{ $pull: { members: res.members[i]._id } }
-// 						).exec();
-// 						Member.deleteOne({ _id: res.members[i]._id });
