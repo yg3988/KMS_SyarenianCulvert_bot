@@ -1,0 +1,30 @@
+{
+	"name": "kms_syarenianculvert_bot",
+	"version": "1.0.0",
+	"description": "Discord Bot for KMS Guild Contents-SyarenianCulvert",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon app.js",
+		"debug": "nodemon --inspect app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/yg3988/KMS_SyarenianCulvert_bot.git"
+	},
+	"keywords": [
+		"discord"
+	],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/yg3988/KMS_SyarenianCulvert_bot/issues"
+	},
+	"homepage": "https://github.com/yg3988/KMS_SyarenianCulvert_bot#readme",
+	"dependencies": {
+		"axios": "^0.21.0",
+		"cheerio": "^1.0.0-rc.3",
+		"discord.js": "^12.4.1",
+		"mongoose": "^5.10.11"
+	}
+}
