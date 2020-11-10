@@ -2,6 +2,8 @@
 
 Discord Bot for KMS Guild Contents-SyarenianCulvert
 
+초대링크 : https://discord.com/api/oauth2/authorize?client_id=769894272954269746&permissions=219285568&scope=bot
+
 # Command
 
 ### 샤레니안 참가 커맨드
